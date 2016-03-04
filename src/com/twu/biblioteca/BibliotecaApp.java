@@ -43,11 +43,32 @@ public class BibliotecaApp {
     }
 
     public String checkoutBooks(String bookToCheckout) {
-        if (allBooks.contains(bookToCheckout)) {
+        if (isCheckoutSuccessful(bookToCheckout)) {
             return allBooks.replace(bookToCheckout + ",", "");
         } else {
             return allBooks;
         }
+    }
+
+    public String returnBooks(String bookToReturn) {
+        if (!isReturnSuccessful(bookToReturn)) {
+            return allBooks;
+        } else {
+            return bookToReturn + "," + bookToReturn;
+        }
+    }
+
+    public boolean isReturnSuccessful(String bookToReturn) {
+//        System.out.print(allBooks+"       "+bookToReturn+"\n");
+        if (allBooks.contains(bookToReturn)) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    public boolean isCheckoutSuccessful(String bookToCheckout) {
+        return allBooks.contains(bookToCheckout);
     }
 
 }

@@ -18,8 +18,43 @@ public class ExampleTest {
     }
 
     @Test
-    public void test_getWelcomeString(){
-        assertEquals("nullable object method","Eric",bibliotecaApp.getWelcomeString("Eric"));
+    public void test_getWelcomeString() {
+        assertEquals("Welcome Eric!", bibliotecaApp.getWelcomeString("Eric"));
+    }
+
+    @Test
+    public void test_getBooksList() {
+        assertEquals("book1,book2,book3,...", bibliotecaApp.getBooksList());
+    }
+
+    @Test
+    public void test_getAllBooksDetails() {
+        assertEquals("Author\tYear\t" + "Eric\t2016\t", bibliotecaApp.getAllBooksDetails());
+    }
+
+    @Test
+    public void test_getMainMenu() {
+        assertEquals("Main Menu\n"
+                + "=============> List Books\n"
+                + "=============> Quit\n", bibliotecaApp.getMainMenu());
+    }
+
+    @Test
+    public void test_isMenuSelectedValid() {
+        assertFalse(bibliotecaApp.isMenuSelectedValid("invalid menu"));
+        assertTrue(bibliotecaApp.isMenuSelectedValid("List Books"));
+    }
+
+    @Test
+    public void test_isQuit() {
+        assertFalse(bibliotecaApp.isQuit("invalid menu"));
+        assertTrue(bibliotecaApp.isQuit("Quit"));
+    }
+
+    @Test
+    public void test_checkoutBooks(){
+        assertEquals("book1,book2,book3,...",bibliotecaApp.checkoutBooks("book5"));
+        assertEquals("book1,book2,...",bibliotecaApp.checkoutBooks("book3"));
     }
 
 }

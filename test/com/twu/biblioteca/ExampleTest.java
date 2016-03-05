@@ -25,6 +25,9 @@ public class ExampleTest {
     private MovieItem movie2;
     private MovieItem movie_tmp;
 
+    private UserItem user1;
+    private UserItem user2;
+
     @Before
     public void setUp() throws Exception {
         bibliotecaApp = new BibliotecaApp();
@@ -42,63 +45,94 @@ public class ExampleTest {
         movies = new ArrayList<MovieItem>();
         movies.add(movie1);
         movies.add(movie2);
+
+        user1 = new UserItem("000-0001", "pwd1", "name1", "111@qq.com", "123456");
+        user2 = new UserItem("000-0002", "pwd2", "name2", "222@qq.com", "234567");
     }
 
     @Test
     public void test_getWelcomeString() {
-        assertEquals("Welcome Eric!", bibliotecaApp.getWelcomeString("Eric"));
+        assertEquals("getWlecomeString()", "Welcome Eric!", bibliotecaApp.getWelcomeString("Eric"));
     }
 
     @Test
     public void test_getBooksList() {
-        assertEquals(books, bibliotecaApp.getBooksList());
+        List<BookItem> actualResult = bibliotecaApp.getBooksList();
+        assertTrue("getBooksList()", books.containsAll(actualResult) && actualResult.containsAll(books));
     }
 
     @Test
     public void test_getAllBooksDetails() {
-        assertEquals("Author\tYear\t" + "Eric\t2016\t", bibliotecaApp.getAllBooksDetails());
+        String expectedResult = "Title\tAuthor\tYear\t" + "\ntitle1\tauthor1\t2010" + "\ntitle2\tauthor2\t2011";
+        assertEquals("getAllBooksDetails()", expectedResult, bibliotecaApp.getAllBooksDetails());
     }
 
     @Test
     public void test_getMainMenu() {
-        assertEquals("Main Menu\n"
+        assertEquals("getMainMenu()", "Main Menu\n"
                 + "=============> List Books\n"
                 + "=============> Quit\n", bibliotecaApp.getMainMenu());
     }
 
     @Test
     public void test_isMenuSelectedValid() {
-        assertFalse(bibliotecaApp.isMenuSelectedValid("invalid menu"));
-        assertTrue(bibliotecaApp.isMenuSelectedValid("List Books"));
+        assertFalse("isMenuSelectedValid()", bibliotecaApp.isMenuSelectedValid("invalid menu"));
+        assertTrue("isMenuSelectedValid()", bibliotecaApp.isMenuSelectedValid("List Books"));
     }
 
     @Test
     public void test_isQuit() {
-        assertFalse(bibliotecaApp.isQuit("invalid menu"));
-        assertTrue(bibliotecaApp.isQuit("Quit"));
+        assertFalse("isQuit()", bibliotecaApp.isQuit("invalid menu"));
+        assertTrue("isQuit()", bibliotecaApp.isQuit("Quit"));
     }
 
     @Test
     public void test_checkoutBooks() {
-        assertEquals(books, bibliotecaApp.checkoutBooks(book_tmp));
-        assertEquals(books, bibliotecaApp.checkoutBooks(book1));
+        List<BookItem> actualBooks;
+        actualBooks = bibliotecaApp.checkoutBooks(book_tmp);
+        assertTrue("checkoutBooks()", books.containsAll(actualBooks) && actualBooks.containsAll(books));
+        actualBooks = bibliotecaApp.checkoutBooks(book1);
+        assertFalse("checkoutBooks()", books.containsAll(actualBooks) && actualBooks.containsAll(books));
     }
 
     @Test
     public void test_returnBooks() {
 
-        assertEquals(books, bibliotecaApp.returnBooks(book1));
+        assertEquals("returnBooks()", books, bibliotecaApp.returnBooks(book1));
     }
 
     @Test
     public void test_isBookReturnSuccessful() {
-        assertFalse(bibliotecaApp.isBookReturnSuccessful(book1));
-        assertTrue(bibliotecaApp.isBookReturnSuccessful(book_tmp));
+        assertFalse("isBookReturnSuccessful()", bibliotecaApp.isBookReturnSuccessful(book1));
+        assertFalse("isBookReturnSuccessful()", bibliotecaApp.isBookReturnSuccessful(book_tmp));
     }
 
     @Test
     public void test_getAvaliableMovies() {
-        assertEquals(movies, bibliotecaApp.getAvailableMovies());
+        List<MovieItem> actualResult;
+        actualResult = bibliotecaApp.getAvailableMovies();
+        assertTrue("getAvaliableMovies()", movies.containsAll(actualResult) && actualResult.containsAll(movies));
+    }
+
+    @Test
+    public void test_checkOutMoive() {
+        assertEquals("checkOutMovie()", null, bibliotecaApp.checkOutMovie(movie_tmp));
+        assertEquals("checkOutMovie()", movie1, bibliotecaApp.checkOutMovie(movie1));
+    }
+
+    @Test
+    public void test_checkUserInfo() {
+        assertFalse("checkUserInfo()", bibliotecaApp.checkUserInfo(user1.getName(), "pwd_false"));
+        assertTrue("checkUserInfo()", bibliotecaApp.checkUserInfo(user1.getName(), "pwd1"));
+    }
+
+    @Test
+    public void test_getUserInfo() {
+        assertNull("getUserInfo()", bibliotecaApp.getUserInfo(user2));
+        String acRes1 = "name:\t" + "name1" + "email:\t" + "111@qq.com" + "phone:\t" + "123456";
+        assertNull("getUserInfo()", bibliotecaApp.getUserInfo(user1));
+        user1.checkUserInfo(user1.getName(), "pwd1");
+        assertEquals("getUserInfo()", acRes1, bibliotecaApp.getUserInfo(user1));
     }
 
 }

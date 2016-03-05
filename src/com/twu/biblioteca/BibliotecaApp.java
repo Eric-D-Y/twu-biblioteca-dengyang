@@ -1,9 +1,6 @@
 package com.twu.biblioteca;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
+import java.util.*;
 
 /**
  * Created by eric on 3/5/16.
@@ -17,6 +14,10 @@ public class BibliotecaApp {
     private List<MovieItem> allMovies;
     private MovieItem movie1;
     private MovieItem movie2;
+
+    private List<UserItem> allUsers;
+    private UserItem user1;
+    private UserItem user2;
 
     public BibliotecaApp() {
         book1 = new BookItem("title1", "author1", 2010);
@@ -32,7 +33,21 @@ public class BibliotecaApp {
         allMovies.add(movie1);
         allMovies.add(movie2);
         Collections.sort(allMovies, movieComparator);
+
+        user1=new UserItem("000-0001","pwd1","name1","111@qq.com","123456");
+        user2=new UserItem("000-0002","pwd2","name2","222@qq.com","234567");
+        allUsers=new ArrayList<UserItem>();
+        allUsers.add(user1);
+        allUsers.add(user2);
+        Collections.sort(allUsers,userComparator);
     }
+
+    Comparator<? super UserItem> userComparator=new Comparator<UserItem>() {
+        @Override
+        public int compare(UserItem userItem, UserItem t1) {
+            return userItem.compareTo(t1);
+        }
+    };
 
     Comparator<? super BookItem> booksComparator = new Comparator<BookItem>() {
         @Override
@@ -127,5 +142,17 @@ public class BibliotecaApp {
         }
     }
 
+    public boolean checkUserInfo(String userName,String userPwd){
+        for(UserItem user:allUsers){
+            if(user.checkUserInfo(userName,userPwd)){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public String getUserInfo(UserItem user){
+        return user.getUserInfo();
+    }
 
 }

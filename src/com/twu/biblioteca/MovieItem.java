@@ -1,15 +1,23 @@
 package com.twu.biblioteca;
 
+import java.util.List;
+
 /**
  * Created by eric on 3/5/16.
  */
-public class MovieItem {
+public class MovieItem implements Comparable<MovieItem> {
 
     private String name = "default";
     private int year = 2010;
     private String director = "default";
     private int rating = 5;
 
+    public MovieItem(String name, String director, int year, int rating) {
+        this.setName(name);
+        this.setDirector(director);
+        this.setYear(year);
+        this.setRating(rating);
+    }
 
     public String getName() {
         return name;
@@ -50,5 +58,14 @@ public class MovieItem {
                 && this.getYear() == item.getYear()
                 && this.getDirector().equals(item.getDirector())
                 && this.getRating() == item.getRating();
+    }
+
+    @Override
+    public int compareTo(MovieItem movieItem) {
+        if(this.equals(movieItem)){
+            return 0;
+        }else{
+            return -1;
+        }
     }
 }

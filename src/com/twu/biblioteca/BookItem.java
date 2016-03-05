@@ -5,11 +5,17 @@ import java.awt.print.Book;
 /**
  * Created by eric on 3/5/16.
  */
-public class BookItem {
+public class BookItem implements Comparable<BookItem> {
 
     private String author = "default";
     private String title = "default";
     private int year = 2016;
+
+    public BookItem(String title, String author, int year) {
+        this.setAuthor(author);
+        this.setTitle(title);
+        this.setYear(year);
+    }
 
     public String getAuthor() {
         return author;
@@ -41,5 +47,14 @@ public class BookItem {
         return item.getAuthor().equals(item.getAuthor())
                 && item.getTitle().equals((item.getTitle()))
                 && item.getYear() == item.getYear();
+    }
+
+    @Override
+    public int compareTo(BookItem bookItem) {
+        if (this.equals(bookItem)) {
+            return 0;
+        } else {
+            return -1;
+        }
     }
 }

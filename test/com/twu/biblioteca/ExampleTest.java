@@ -45,7 +45,6 @@ public class ExampleTest {
         assertTrue(bibliotecaApp.isMenuSelectedValid("List Books"));
     }
 
-
     @Test
     public void test_isQuit() {
         assertFalse(bibliotecaApp.isQuit("invalid menu"));
@@ -53,20 +52,25 @@ public class ExampleTest {
     }
 
     @Test
-    public void test_checkoutBooks(){
-        assertEquals("book1,book2,book3,...",bibliotecaApp.checkoutBooks("book5"));
-        assertEquals("book2,book3,...",bibliotecaApp.checkoutBooks("book1"));
+    public void test_checkoutBooks() {
+        assertEquals("book1,book2,book3,...", bibliotecaApp.checkoutBooks("book5"));
+        assertEquals("book2,book3,...", bibliotecaApp.checkoutBooks("book1"));
     }
 
     @Test
-    public void test_returnBooks(){
-        assertEquals("book1,book2,book3,...",bibliotecaApp.returnBooks("book1"));
+    public void test_returnBooks() {
+        assertEquals("book1,book2,book3,...", bibliotecaApp.returnBooks("book1"));
     }
 
     @Test
-    public void test_isReturnSuccessful(){
+    public void test_isReturnSuccessful() {
         assertFalse(bibliotecaApp.isReturnSuccessful("book1"));
         assertTrue(bibliotecaApp.isReturnSuccessful("book5"));
+    }
+
+    @Test
+    public void test_getAvaliableMovies(){
+        assertEquals("movie1,movie2,movie3,...",bibliotecaApp.getAvaliableMovies());
     }
 
 }
